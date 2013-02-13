@@ -44,7 +44,7 @@ public:
 		}
 
 		Vector2i endIndex = end;
-		TileType& endTile( myGrid->Get(endIndex.x + endIndex.y * myGrid->Size2D().y) );
+		AStarData& endTile( myAStarData[endIndex.x + endIndex.y * myGrid->Size2D().y] );
 		if( endTile.IsTraverseable() == false ) {
 			return false;
 		}
@@ -68,26 +68,28 @@ public:
 			}
 
 			for( int offsetIndex = 0; offsetIndex < myDirections._EEN_SIZE; offsetIndex++ ) {
-				Vector2i checkIndex = currentTile + myDirections[offsetIndex];
-				TileType& checkTile = myGrid->Get(checkIndex.x + checkIndex.y * myGrid->Size2D().y);
+				const Vector2i checkIndex = currentTile + myDirections[offsetIndex];
+				const int index = checkIndex.x + checkIndex.y * myGrid->Size2D().y;
+				TileType& checkTile = myGrid->Get(index);
+				AStarData& checkData = myAStarData[index];
 
-				if( checkTile.IsTraverseable() && std::find(closedList.begin(), closedList.end(), myAStarData[checkIndex.x + checkIndex.y * myGrid->Size2D().y])) {
-					if( !checkTile.myIsInOpenList )
+				if( checkTile.IsTraverseable() && 
+					std::find(closedList.begin(), closedList.end(), 
+					checkData) ) {
+					if( std::find(openList.begin(), closedList.end(), 
+						checkData) == openList.end() )
 					{
-						checkTile.SetupTriangleInAStar( first.myTile, &endTile );
-						openList.Enqueue( NavMeshHeapHelper( &checkTile ) );
+						checkData.Visit( first, endTile );
+						std::push_heap(openList.begin(), openList.end(), checkData );
 					}
-					else if( checkTile.CheckIfCheaperWay( first.myTile ) )
+					else if( checkData.CheckIfCheaperWay( first ) )
 					{
-						checkTile.SetupTriangleInAStar( first.myTile, &endTile );
-						openList.Enqueue( NavMeshHeapHelper( &checkTile ) );
+						checkTile.Visit( first.myTile, &endTile );
+						std::push_heap(openList.begin(), openList.end(), checkTile);
 					}
 				}
 			}
-
-			first.myTile->myIsInOpenList = false;
-			first.myTile->myIsInClosedList= true;
-			closedList.Enqueue( first );
+			std::push_heap(closedList.begin(), closedList.end(), first);
 		} 
 		endTile.GetPath( someMovement );
 		someMovement.Add( anEndPosition );
@@ -115,6 +117,10 @@ private:
 		float myG;
 		float myH;
 		float myF;
+
+		void Visit(AStarData& first, AStarData& last) {
+
+		}
 	};
 
 
