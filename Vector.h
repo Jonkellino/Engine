@@ -1,0 +1,62 @@
+#ifndef _VECTOR2_H_
+#define _VECTOR2_H_
+
+template<typename Type>
+class Vector2
+{
+public:
+	Type x;
+	Type y;
+
+
+	Vector2() {
+		x = static_cast<Type>(0);
+		y = static_cast<Type>(0);
+	}
+
+	explicit Vector2(Type anX, Type anY) {
+		x = anX;
+		y = anY;
+	}
+
+	~Vector2() {
+	}
+
+	Vector2 operator+(const Vector2<Type>& other) const {
+		return Vector2(x + other.x, y + other.y);
+	}
+
+	Vector2 operator-(const Vector2<Type>& other) const {
+		return Vector2(x - other.x, y - other.y);
+	}
+
+	Vector2 operator*(const Type& aScalar) const {
+		return Vector2(x * other.x, y * other.y);
+	}
+
+	Vector2 operator/(const Type& aScalar) const {
+		return Vector2(x / aScalar, y / aScalar);
+	}
+
+	Vector2& operator*=(const Type& aScalar) {
+		x *= aScalar;
+		y *= aScalar;
+		return *this;
+	}
+
+	Vector2& operator/=(const Type& aScalar) {
+		x /= aScalar;
+		y /= aScalar;
+		return *this;
+	}
+
+	const bool operator==(const Vector2<Type>& other) {
+			return x == other.x && y == other.y;
+	}
+};
+
+typedef Vector2<int> Vector2i;
+typedef Vector2<float> Vector2f;
+
+
+#endif
