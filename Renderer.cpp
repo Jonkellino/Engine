@@ -32,7 +32,6 @@ void Renderer::Render() {
 		SDL_SetTextureBlendMode(data.myTexture, message.blendMode);
 		SDL_RenderCopyEx(myRenderer, data.myTexture, &srcRect, &dstRect, message.angle, &hotspot, message.flip);
 	}
-	SDL_RenderPresent(myRenderer);
 }
 
 void Renderer::RenderSprite(const RenderMessage aRenderMessage) {

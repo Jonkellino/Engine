@@ -21,15 +21,24 @@ Engine* Engine::GetInstance() {
 void Engine::Render() {
 	SDL_UpdateWindowSurface(myWindow); 
 	myRenderer.Render();
+	for(auto index = 0U; index < myMessageStack.Size(); ++index) {
+		EngineMessage& message = myMessageStack[index];
+		if(message.myType == EngineMessageType::LINE_RENDER) {
+			SDL_SetRenderDrawColor(mySDLRenderer, message.lineRender.myColor.r, message.lineRender.myColor.g, message.lineRender.myColor.b, message.lineRender.myColor.a);
+			SDL_RenderDrawLine(mySDLRenderer, message.lineRender.myVertices[0], message.lineRender.myVertices[1], message.lineRender.myVertices[2], message.lineRender.myVertices[3]);
+		}
+	}
+	
+	SDL_RenderPresent(mySDLRenderer);
 }
 
 void Engine::EndFrame() {
 	myRenderer.EndFrame();
-	myMessageQueue.Switch();
+	myMessageStack.Switch();
 }
 
 void Engine::NotifyMessage(EngineMessage aMessage) {
-	myMessageQueue.Push(aMessage);
+	myMessageStack.Push(aMessage);
 }
 
 void Engine::RenderSprite(const RenderMessage aMessage) {

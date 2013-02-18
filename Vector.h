@@ -1,5 +1,6 @@
 #ifndef _VECTOR2_H_
 #define _VECTOR2_H_
+#include <cmath>
 
 template<typename Type>
 class Vector2
@@ -31,7 +32,11 @@ public:
 	}
 
 	Vector2 operator*(const Type& aScalar) const {
-		return Vector2(x * other.x, y * other.y);
+		return Vector2(x * aScalar, y * aScalar);
+	}
+
+	Vector2 operator/(const Vector2<Type>& other) const {
+		return Vector2(x / other.x, y / other.y);
 	}
 
 	Vector2 operator/(const Type& aScalar) const {
@@ -49,9 +54,26 @@ public:
 		y /= aScalar;
 		return *this;
 	}
+	Vector2& operator+=(const Vector2& other) {
+		x += other.x;
+		y += other.y;
+		return *this;
+	}
 
-	const bool operator==(const Vector2<Type>& other) {
-			return x == other.x && y == other.y;
+	const bool operator==(const Vector2<Type>& other) const {
+		return x == other.x && y == other.y;
+	}
+
+	const bool operator<(const Vector2<Type>& other) const {
+		return x < other.x && y < other.y;
+	}
+
+	const Type Length() const {
+		return sqrt(LengthSquared());
+	}
+
+	const Type LengthSquared() const {
+		return x*x+y*y; 
 	}
 };
 

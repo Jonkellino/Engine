@@ -25,6 +25,10 @@ public:
 		return myTiles[anIndex];
 	}
 
+	Tile& Get(const Vector2i anIndex) {
+		return Get(anIndex.x, anIndex.y);
+	}
+
 	Tile& Get(const int x, const int y) {
 		assert(x < mySize.x && y < mySize.y &&
 				x >= 0 && y >= 0 &&
@@ -37,7 +41,7 @@ public:
 	}
 
 	size_t Size() const {
-		return mySize;
+		return myTiles.size();
 	}
 
 	Vector2i TileSize() const {

@@ -42,5 +42,9 @@ std::map<std::string, unsigned>::iterator SpriteFactory::NewSprite(const std::st
 	newData.myBaseRenderMessage.textureIndex = targetIndex;
 	newData.myBaseRenderMessage.hotspot = newData.myBaseRenderMessage.size / 2;
 	newData.myBaseRenderMessage.blendMode = SDL_BlendMode::SDL_BLENDMODE_ADD;
+	newData.myBaseRenderMessage.color.r = 255;
+	newData.myBaseRenderMessage.color.g = 255;
+	newData.myBaseRenderMessage.color.b = 255;
+	newData.myBaseRenderMessage.color.a = 255;
 	return iter;
 }

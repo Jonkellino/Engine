@@ -29,18 +29,30 @@ public:
 		return toReturn;
 	}
 
+	template<typename IndexAccessor>
+	Type& operator[](const IndexAccessor index) {
+		return myStacks[myActiveStack][index];
+	}
+
 	const size_t Size() const {
 		return myStacks[myActiveStack].size();
 	}
 
 
 	void Switch() {
+		myStacks[myActiveStack].clear();
 		if(myActiveStack == 0) {
 			_InterlockedIncrement(&myActiveStack);
 		}
 		else {
 			_InterlockedDecrement(&myActiveStack);
 		}
+	}
+	typename std::vector<Type>::iterator begin() {
+		return myStacks[myActiveStack].begin();
+	}
+	typename std::vector<Type>::iterator end() {
+		return myStacks[myActiveStack].end();
 	}
 
 private:

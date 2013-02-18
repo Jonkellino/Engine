@@ -22,7 +22,8 @@ public:
 	bool Dequeue(T &aValue ){
 		if( myData.size() )
 		{
-			aValue = Dequeue();
+			aValue = myData[0];
+			myData.erase(myData.begin());
 			return true;
 		}
 		return false;
@@ -50,12 +51,40 @@ public:
 	void Clear(){
 		myData.clear();
 	}
+
+
+	const bool ExistsIn(const T& aTarget) {
+		for(auto& data : myData) {
+			if(memcmp(&aTarget, &data, sizeof(T) == 0)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	typename std::vector<T>::iterator begin() {
+		return myData.begin();
+	}
+
+	typename std::vector<T>::iterator end() {
+		return myData.end();
+	}
+
+	const size_t size() const {
+		return myData.size();
+	}
+
+	T& front() {
+		return myData.front();
+	}
+
+
 private: 
 	void BubbleUp( const unsigned int &aPosition ){
 		for( unsigned int index = aPosition; index > 0; index = ( index - 1 ) / 2 )
 		{
 			unsigned int parent = ( index - 1 ) / 2;
-			if( myData[index] < myData[parent] )
+			if( myData[index] > myData[parent] )
 			{
 				break;
 			}

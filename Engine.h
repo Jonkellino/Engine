@@ -14,6 +14,7 @@
 class Engine
 {
 	friend class Sprite;
+	friend class Line;
 public:
 	static void				Create();
 	static void				Destroy();
@@ -38,7 +39,7 @@ private:
 	SpriteFactory			mySpriteFactory;
 
 	DoubleThreadingStack
-		<EngineMessage>		myMessageQueue;
+		<EngineMessage>		myMessageStack;
 };
 
 
