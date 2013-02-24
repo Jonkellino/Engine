@@ -15,7 +15,7 @@ public:
 	Grid() {};
 	~Grid() {};
 
-	void Init(const Vector2i& aSize, const Vector2i aTileSize) {
+	void Init(const Vector2i& aSize, const Vector2i& aTileSize) {
 		mySize = aSize;
 		myTileSize = aTileSize;
 		myTiles.resize(aSize.x * aSize.y);

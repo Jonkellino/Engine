@@ -23,38 +23,38 @@ public:
 	~Vector2() {
 	}
 
-	Vector2 operator+(const Vector2<Type>& other) const {
-		return Vector2(x + other.x, y + other.y);
+	Vector2<Type> operator+(const Vector2<Type>& other) const {
+		return Vector2<Type>(x + other.x, y + other.y);
 	}
 
-	Vector2 operator-(const Vector2<Type>& other) const {
-		return Vector2(x - other.x, y - other.y);
+	Vector2<Type> operator-(const Vector2<Type>& other) const {
+		return Vector2<Type>(x - other.x, y - other.y);
 	}
 
-	Vector2 operator*(const Type& aScalar) const {
-		return Vector2(x * aScalar, y * aScalar);
+	Vector2<Type> operator*(const Type& aScalar) const {
+		return Vector2<Type>(x * aScalar, y * aScalar);
 	}
 
-	Vector2 operator/(const Vector2<Type>& other) const {
-		return Vector2(x / other.x, y / other.y);
+	Vector2<Type> operator/(const Vector2<Type>& other) const {
+		return Vector2<Type>(x / other.x, y / other.y);
 	}
 
-	Vector2 operator/(const Type& aScalar) const {
-		return Vector2(x / aScalar, y / aScalar);
+	Vector2<Type> operator/(const Type& aScalar) const {
+		return Vector2<Type>(x / aScalar, y / aScalar);
 	}
 
-	Vector2& operator*=(const Type& aScalar) {
+	Vector2<Type>& operator*=(const Type& aScalar) {
 		x *= aScalar;
 		y *= aScalar;
 		return *this;
 	}
 
-	Vector2& operator/=(const Type& aScalar) {
+	Vector2<Type>& operator/=(const Type& aScalar) {
 		x /= aScalar;
 		y /= aScalar;
 		return *this;
 	}
-	Vector2& operator+=(const Vector2& other) {
+	Vector2<Type>& operator+=(const Vector2& other) {
 		x += other.x;
 		y += other.y;
 		return *this;

@@ -22,11 +22,16 @@ void Renderer::Render() {
 	SDL_RenderClear(myRenderer); 
 	while(myRenderStacks.Size() > 0) {
 		auto message = myRenderStacks.Pop();
-		SDL_Rect srcRect = {0,0,static_cast<int>(message.size.x),static_cast<int>(message.size.y)};
-		SDL_Rect dstRect = {static_cast<int>(message.pos.x), static_cast<int>(message.pos.y), static_cast<int>(message.size.x), static_cast<int>(message.size.y)};
+		SDL_Rect srcRect = {message.topLeft.x,message.topLeft.y, 
+							message.size.x, message.size.y};
+		Vector2i fullScale(static_cast<int>(static_cast<float>(message.size.x)*message.scale.x), static_cast<int>(static_cast<float>(message.size.y)*message.scale.y));
+		SDL_Point hotspot = {static_cast<int>(message.hotspot.x*fullScale.x),
+							static_cast<int>(message.hotspot.y*fullScale.y)};
+		Vector2i destTopLeft(message.pos.x - hotspot.x, message.pos.y - hotspot.y);
+		SDL_Rect dstRect = {destTopLeft.x, destTopLeft.y, fullScale.x, fullScale.y};
 
 		const SpriteRenderingData data = mySpriteFactory->Get(message.textureIndex); 
-		SDL_Point hotspot = {message.hotspot.x, message.hotspot.y}; 
+		
 		SDL_SetTextureColorMod(data.myTexture, message.color.r, message.color.g, message.color.b);
 		SDL_SetTextureAlphaMod(data.myTexture, message.color.a);
 		SDL_SetTextureBlendMode(data.myTexture, message.blendMode);

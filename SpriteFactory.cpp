@@ -40,11 +40,13 @@ std::map<std::string, unsigned>::iterator SpriteFactory::NewSprite(const std::st
 	memset(&newData.myBaseRenderMessage, 0, sizeof(RenderMessage));
 	SDL_QueryTexture(newData.myTexture, NULL, NULL, &newData.myBaseRenderMessage.size.x, &newData.myBaseRenderMessage.size.y);
 	newData.myBaseRenderMessage.textureIndex = targetIndex;
-	newData.myBaseRenderMessage.hotspot = newData.myBaseRenderMessage.size / 2;
+	newData.myBaseRenderMessage.hotspot = Vector2f(0.5f, 0.5f);
 	newData.myBaseRenderMessage.blendMode = SDL_BlendMode::SDL_BLENDMODE_ADD;
 	newData.myBaseRenderMessage.color.r = 255;
 	newData.myBaseRenderMessage.color.g = 255;
 	newData.myBaseRenderMessage.color.b = 255;
 	newData.myBaseRenderMessage.color.a = 255;
+	newData.myBaseRenderMessage.topLeft = Vector2i(0,0);
+	newData.myBaseRenderMessage.scale = Vector2f(1,1);
 	return iter;
 }

@@ -27,11 +27,10 @@ public:
 
 	void SetGrid(Grid<TileType>* aGrid) {
 		myGrid = aGrid;
-		
 		myAStarData.resize(myGrid->Size());
 		for(int y = 0; y < myGrid->Size2D().y; ++y) {
-			 for(int x = 0; x < myGrid->Size2D().x; ++x) {
-				AStarData& tile = myAStarData[x + y * myGrid->Size2D().y];
+			for(int x = 0; x < myGrid->Size2D().x; ++x) {
+				AStarData& tile = myAStarData[x + y * myGrid->Size2D().x];
 				tile.Reset();
 				tile.myIndex = Vector2i(x,y);
 				tile.myTile = &myGrid->Get(x,y);
@@ -83,7 +82,6 @@ public:
 
 			Vector2i currentTile = first->myIndex;
 			if( currentTile == endIndex ) {
-
 				foundAnEnd = true;
 				break;
 			}
@@ -114,11 +112,14 @@ public:
 			first->myIsInClosedList = true; 
 		} 
 
-		endTile->GetPath( outputPath );
+		if(foundAnEnd) {
+			outputPath.clear();
+			endTile->GetPath( outputPath );
+		}
 		for(auto& data : myAStarData) {
 			data.Reset();
 		} 
-		return true;
+		return foundAnEnd;
 	}
 
 private:
@@ -178,7 +179,7 @@ private:
 		}
 	};
 
-	
+
 	struct AStarSortWrapper 
 	{ 
 		AStarData* myData;

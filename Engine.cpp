@@ -7,7 +7,7 @@ Engine* Engine::ourInstance = nullptr;
 
 void Engine::Create() {
 	ourInstance = new Engine();
-	ourInstance->Init();
+	ourInstance->Init(); 
 }
 
 void Engine::Destroy() {
@@ -19,6 +19,11 @@ Engine* Engine::GetInstance() {
 }
 
 void Engine::Render() {
+	while(myLoadMutex){
+		SDL_Delay(1);
+	}
+	myLoadMutex = true;
+
 	SDL_UpdateWindowSurface(myWindow); 
 	myRenderer.Render();
 	for(auto index = 0U; index < myMessageStack.Size(); ++index) {
@@ -30,6 +35,7 @@ void Engine::Render() {
 	}
 	
 	SDL_RenderPresent(mySDLRenderer);
+	myLoadMutex = false;
 }
 
 void Engine::EndFrame() {
@@ -46,7 +52,13 @@ void Engine::RenderSprite(const RenderMessage aMessage) {
 }
 
 RenderMessage Engine::LoadSprite(const std::string& aSprite) {
-	return mySpriteFactory.LoadSprite(aSprite);
+	while(myLoadMutex){
+		SDL_Delay(1);
+	}
+	myLoadMutex = true;
+	RenderMessage output = mySpriteFactory.LoadSprite(aSprite);
+	myLoadMutex = false;
+	return output;
 }
 
 Engine::Engine() {
@@ -58,14 +70,16 @@ Engine::~Engine() {
 }
 
 void Engine::Init() {
+	myLoadMutex = true;
 	if(SDL_Init(SDL_INIT_EVERYTHING) == -1) {
 		std::string output = "Couldn't initialize SDL, err: ";
 		output += SDL_GetError();
 		assert(0 && output.c_str());
 	}
 	IMG_Init(IMG_INIT_PNG);
-	myWindow = SDL_CreateWindow("I am a hat, AMA", 256,100,1024,768, 0);
+	myWindow = SDL_CreateWindow("I am a hat, AMA", 0,0,1920,1080, SDL_WINDOW_BORDERLESS);
 	mySDLRenderer = SDL_CreateRenderer(myWindow, -1, ::SDL_RendererFlags::SDL_RENDERER_ACCELERATED);
 	myRenderer.Init(myWindow, mySDLRenderer, &mySpriteFactory);
 	mySpriteFactory.Init(mySDLRenderer);
+	myLoadMutex = false;
 }

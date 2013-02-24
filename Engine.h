@@ -38,6 +38,8 @@ private:
 	Renderer				myRenderer;
 	SpriteFactory			mySpriteFactory;
 
+	bool					myLoadMutex;
+
 	DoubleThreadingStack
 		<EngineMessage>		myMessageStack;
 };
