@@ -16,11 +16,11 @@ public:
 										~SpriteFactory(void);
 	void								Init(SDL_Renderer* aRenderer);
 	const SpriteRenderingData			Get(const int anIndex) const;
-	RenderMessage						LoadSprite(std::string aSprite);
+	RenderMessage						LoadSprite(std::string aSprite, SDL_Surface* aSurface = NULL);
 private:
 
 	std::map<std::string, unsigned>
-		::iterator						NewSprite(const std::string& aSprite);
+		::iterator						NewSprite(const std::string& aSprite, SDL_Surface* aSurface);
 
 private:
 

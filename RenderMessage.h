@@ -7,6 +7,7 @@
 
 struct RenderMessage
 {
+
 	Vector2i			topLeft;
 	Vector2i			pos;
 	Vector2i			size;

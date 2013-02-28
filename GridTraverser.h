@@ -38,36 +38,26 @@ public:
 		}
 	}
 
-	const bool Inside(Vector2i index) {
-		if(index.x < 0 || index.y < 0 ||
-			index.x >= myGrid->Size2D().x || index.y >= myGrid->Size2D().y) {
-				return false;
-		}
-		return true;
-	}
-
 	bool Pathfind(Vector2i start, Vector2i end, std::vector<TileType*>& outputPath) {
 		if(!myGrid) {
 			return false;
 		}
 		Vector2i startIndex = start;
-		if( !Inside( startIndex ) ) {
+		if( !myGrid->Inside( startIndex ) || !myGrid->Get(startIndex).IsTraverseable() ) {
 			return false;
 		}
 
 		Vector2i endIndex = end;
-		if( !Inside( endIndex ) ) {
+		if( !myGrid->Inside( endIndex ) || !myGrid->Get(endIndex).IsTraverseable() ) {
 			return false;
 		} 
+		const int gridWidth = myGrid->Size2D().x;
 
-		AStarData* endTile = &myAStarData[endIndex.x + endIndex.y * myGrid->Size2D().x];
+		AStarData* endTile = &myAStarData[endIndex.x + endIndex.y * gridWidth];
 		if( myGrid->Get(endTile->myIndex.x, endTile->myIndex.y).IsTraverseable() == false ) {
 			return false;
 		}
-
 		Heap<AStarSortWrapper> openList;
-		const int gridWidth = myGrid->Size2D().x;
-
 		AStarData& startTile( myAStarData[startIndex.x + startIndex.y * gridWidth] );
 		startTile.myIsInOpenList = true;
 		openList.Enqueue( AStarSortWrapper(&startTile) );
@@ -88,7 +78,7 @@ public:
 
 			for( int offsetIndex = 0; offsetIndex < myDirections._EEN_SIZE; offsetIndex++ ) {
 				const Vector2i checkIndex = currentTile + myDirections[offsetIndex];
-				if(!Inside(checkIndex)) {
+				if(!myGrid->Inside(checkIndex)) {
 					continue;
 				}
 				const int index = checkIndex.x + checkIndex.y * gridWidth;

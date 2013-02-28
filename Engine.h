@@ -5,16 +5,18 @@
 #include <vector>
 #include "Renderer.h"
 #include "SDL/SDL.h"
+#include "SDL/SDL_ttf.h"
 #include "Sprite.h"
 #include "SpriteFactory.h"
 #include "EngineMessage.h"
 #include "DoubleThreadingStack.h"
+#include "Text.h"
 
 
 class Engine
 {
 	friend class Sprite;
-	friend class Line;
+	friend class Text;
 public:
 	static void				Create();
 	static void				Destroy();
@@ -28,7 +30,11 @@ private:
 							~Engine();
 
 	void					RenderSprite(const RenderMessage aMessage);
+	void					RenderText(const RenderMessage aMessage);
 	RenderMessage			LoadSprite(const std::string& aSprite);
+	RenderMessage			LoadText(const std::string& aText, const std::string& aTextureID);
+	void					RenderSurfaceToTexture(SDL_Surface* aSurface, const unsigned aTexture);
+	
 	void					Init();
 
 private:
@@ -37,6 +43,8 @@ private:
 	SDL_Renderer*			mySDLRenderer;
 	Renderer				myRenderer;
 	SpriteFactory			mySpriteFactory;
+
+	TTF_Font*				myFont;
 
 	bool					myLoadMutex;
 

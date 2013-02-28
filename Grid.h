@@ -5,9 +5,6 @@
 #include <cassert>
 #include "Vector.h"
 
-
-
-
 template<typename Tile>
 class Grid
 {
@@ -33,7 +30,15 @@ public:
 		assert(x < mySize.x && y < mySize.y &&
 				x >= 0 && y >= 0 &&
 				"Out of bounds index");
-		return myTiles[x + y * mySize.y];
+		return myTiles[x + y * mySize.x];
+	}
+
+	const bool Inside(Vector2i index) {
+		if(index.x < 0 || index.y < 0 ||
+			index.x >= Size2D().x || index.y >= Size2D().y) {
+				return false;
+		}
+		return true;
 	}
 
 	Vector2i Size2D() const {

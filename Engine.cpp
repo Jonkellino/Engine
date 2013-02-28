@@ -2,6 +2,7 @@
 #include <cassert>
 #include <string>
 #include "SDL\SDL_image.h"
+#include "SDL\SDL_ttf.h"
 
 Engine* Engine::ourInstance = nullptr;
 
@@ -61,6 +62,20 @@ RenderMessage Engine::LoadSprite(const std::string& aSprite) {
 	return output;
 }
 
+RenderMessage Engine::LoadText(const std::string& aText, const std::string& aTextureID) {
+	while(myLoadMutex) {
+		SDL_Delay(1);
+	}
+	myLoadMutex = true;
+	SDL_Color WTF;
+	memset(&WTF, 255, sizeof(WTF));
+	
+	SDL_Surface* temp = TTF_RenderText_Blended(myFont, aText.c_str(), WTF);
+	RenderMessage output = mySpriteFactory.LoadSprite(aTextureID, temp); 
+	myLoadMutex = false;
+	return output;
+}
+
 Engine::Engine() {
 }
 
@@ -77,6 +92,9 @@ void Engine::Init() {
 		assert(0 && output.c_str());
 	}
 	IMG_Init(IMG_INIT_PNG);
+	TTF_Init();
+
+	myFont = TTF_OpenFont("font.ttf", 20);
 	myWindow = SDL_CreateWindow("I am a hat, AMA", 0,0,1920,1080, SDL_WINDOW_BORDERLESS);
 	mySDLRenderer = SDL_CreateRenderer(myWindow, -1, ::SDL_RendererFlags::SDL_RENDERER_ACCELERATED);
 	myRenderer.Init(myWindow, mySDLRenderer, &mySpriteFactory);

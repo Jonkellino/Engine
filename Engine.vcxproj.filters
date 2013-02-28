@@ -11,6 +11,8 @@
       <Filter>Rendering</Filter>
     </ClCompile>
     <ClCompile Include="SpriteFactory.cpp" />
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="Text.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -44,6 +46,11 @@
     <ClInclude Include="Heap.h">
       <Filter>Structures</Filter>
     </ClInclude>
+    <ClInclude Include="MathUtility.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="Text.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Rendering">

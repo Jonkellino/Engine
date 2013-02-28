@@ -5,6 +5,7 @@
 #include <cassert>
 
 Renderer::Renderer(void) {
+	
 }
 
 
@@ -18,6 +19,7 @@ void Renderer::Init(SDL_Window* aWindow, SDL_Renderer* aRenderer, SpriteFactory*
 }
  
 void Renderer::Render() { 
+	myActiveRender = true;
 	SDL_SetRenderDrawColor(myRenderer, 0, 0, 0, 255);
 	SDL_RenderClear(myRenderer); 
 	while(myRenderStacks.Size() > 0) {
@@ -28,7 +30,7 @@ void Renderer::Render() {
 		SDL_Point hotspot = {static_cast<int>(message.hotspot.x*fullScale.x),
 							static_cast<int>(message.hotspot.y*fullScale.y)};
 		Vector2i destTopLeft(message.pos.x - hotspot.x, message.pos.y - hotspot.y);
-		SDL_Rect dstRect = {destTopLeft.x, destTopLeft.y, fullScale.x, fullScale.y};
+		SDL_Rect dstRect = {destTopLeft.x, destTopLeft.y, fullScale.x, fullScale.y}; 
 
 		const SpriteRenderingData data = mySpriteFactory->Get(message.textureIndex); 
 		
@@ -37,12 +39,16 @@ void Renderer::Render() {
 		SDL_SetTextureBlendMode(data.myTexture, message.blendMode);
 		SDL_RenderCopyEx(myRenderer, data.myTexture, &srcRect, &dstRect, message.angle, &hotspot, message.flip);
 	}
+	myActiveRender = false;
 }
 
 void Renderer::RenderSprite(const RenderMessage aRenderMessage) {
 	myRenderStacks.Push(aRenderMessage);
 }
 
-void Renderer::EndFrame() {
+void Renderer::EndFrame() { 
+	while(myActiveRender){
+		SDL_Delay(1);
+	}
 	myRenderStacks.Switch();
 }

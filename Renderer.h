@@ -28,9 +28,7 @@ private:
 		RenderMessage>		myRenderStacks;
 
 	SpriteFactory*			mySpriteFactory;
-
-
-
+	bool					myActiveRender;
 };
 
 #endif
