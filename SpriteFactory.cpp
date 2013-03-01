@@ -26,9 +26,11 @@ RenderMessage SpriteFactory::LoadSprite(std::string aSprite, SDL_Surface* aSurfa
 	if(indexIterator == mySpriteIndexMap.end()) {
 		indexIterator = NewSprite(aSprite, aSurface);
 	}
-	if(aSurface) {
-		SDL_DestroyTexture(myRenderData[(*indexIterator).second].myTexture);
-		myRenderData[(*indexIterator).second].myTexture = SDL_CreateTextureFromSurface(myRenderer, aSurface);
+	else if(aSurface) { 
+		SpriteRenderingData& data = myRenderData[(*indexIterator).second];
+		SDL_DestroyTexture(data.myTexture);
+		data.myBaseRenderMessage.size = Vector2i(aSurface->w, aSurface->h);
+		data.myTexture = SDL_CreateTextureFromSurface(myRenderer, aSurface);  
 	}
 
 	return myRenderData[(*indexIterator).second].myBaseRenderMessage;

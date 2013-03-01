@@ -95,7 +95,7 @@ void Engine::Init() {
 	TTF_Init();
 
 	myFont = TTF_OpenFont("font.ttf", 20);
-	myWindow = SDL_CreateWindow("I am a hat, AMA", 0,0,1920,1080, SDL_WINDOW_BORDERLESS);
+	myWindow = SDL_CreateWindow("I am a hat, AMA", 0,0,1680,1024, SDL_WINDOW_BORDERLESS);
 	mySDLRenderer = SDL_CreateRenderer(myWindow, -1, ::SDL_RendererFlags::SDL_RENDERER_ACCELERATED);
 	myRenderer.Init(myWindow, mySDLRenderer, &mySpriteFactory);
 	mySpriteFactory.Init(mySDLRenderer);
