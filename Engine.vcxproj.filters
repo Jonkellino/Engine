@@ -13,6 +13,7 @@
     <ClCompile Include="SpriteFactory.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Text.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -51,6 +52,7 @@
     </ClInclude>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Text.h" />
+    <ClInclude Include="Keyboard.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Rendering">

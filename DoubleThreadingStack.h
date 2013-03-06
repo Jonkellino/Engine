@@ -40,7 +40,6 @@ public:
 
 
 	void Switch() {
-		myStacks[myActiveStack].clear();
 		if(myActiveStack == 0) {
 			_InterlockedIncrement(&myActiveStack);
 		}

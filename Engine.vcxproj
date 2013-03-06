@@ -80,6 +80,7 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteFactory.cpp" />
@@ -94,6 +95,7 @@
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GridTraverser.h" />
     <ClInclude Include="Heap.h" />
+    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="MathUtility.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RenderMessage.h" />

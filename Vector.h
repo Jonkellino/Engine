@@ -23,7 +23,7 @@ public:
 
 	~Vector2() {
 	}
-
+	 
 	const Vector2<Type> operator+(const Vector2<Type>& other) const {
 		return Vector2<Type>(x + other.x, y + other.y);
 	}

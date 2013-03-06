@@ -67,10 +67,10 @@ RenderMessage Engine::LoadText(const std::string& aText, const std::string& aTex
 		SDL_Delay(1);
 	}
 	myLoadMutex = true;
-	SDL_Color WTF;
-	memset(&WTF, 255, sizeof(WTF));
+	SDL_Color col;
+	memset(&col, 255, sizeof(col));
 	
-	SDL_Surface* temp = TTF_RenderText_Blended(myFont, aText.c_str(), WTF);
+	SDL_Surface* temp = TTF_RenderText_Blended(myFont, aText.c_str(), col);
 	RenderMessage output = mySpriteFactory.LoadSprite(aTextureID, temp); 
 	myLoadMutex = false;
 	return output;

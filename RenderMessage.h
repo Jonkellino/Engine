@@ -7,17 +7,19 @@
 
 struct RenderMessage
 {
-
 	Vector2i			topLeft;
 	Vector2i			pos;
 	Vector2i			size;
-	Vector2f			hotspot;
-	Vector2f			scale;
-	Color				color;
-	unsigned			textureIndex;
 	SDL_RendererFlip	flip;
 	SDL_BlendMode		blendMode;
+	Color				color;
+	unsigned			textureIndex;
+
+	Vector2f			hotspot;
+	Vector2f			scale;
+	float				depth;
 	double				angle;
+
 };
 
 #endif

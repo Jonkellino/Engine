@@ -17,11 +17,18 @@ void Renderer::Init(SDL_Window* aWindow, SDL_Renderer* aRenderer, SpriteFactory*
 	myRenderer = aRenderer;
 	mySpriteFactory = aSpriteFactory;
 }
+
+const bool renderMessageSortCompare(const RenderMessage& first, const RenderMessage& second) 
+{
+	return first.depth < second.depth;
+}
  
 void Renderer::Render() { 
 	myActiveRender = true;
 	SDL_SetRenderDrawColor(myRenderer, 0, 0, 0, 255);
 	SDL_RenderClear(myRenderer); 
+
+	std::sort(myRenderStacks.begin(), myRenderStacks.end(), &renderMessageSortCompare);
 	while(myRenderStacks.Size() > 0) {
 		auto message = myRenderStacks.Pop();
 		SDL_Rect srcRect = {message.topLeft.x,message.topLeft.y, 
