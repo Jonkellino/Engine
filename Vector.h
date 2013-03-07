@@ -59,9 +59,16 @@ public:
 		y /= aScalar;
 		return *this;
 	}
+
 	Vector2<Type>& operator+=(const Vector2& other) {
 		x += other.x;
 		y += other.y;
+		return *this;
+	}
+
+	Vector2<Type>& operator-=(const Vector2& other) {
+		x -= other.x;
+		y -= other.y;
 		return *this;
 	}
 
@@ -81,16 +88,19 @@ public:
 		return Vector2<float>(static_cast<float>(x), static_cast<float>(y));
 	}
 
-	const Type Length() const {
-		return sqrt(LengthSquared());
+	const float Length() const {
+		return sqrtf(static_cast<float>(LengthSquared()));
 	}
 
-	const Type LengthSquared() const {
-		return x*x+y*y; 
+	const float LengthSquared() const {
+		return static_cast<float>(x*x+y*y); 
 	}
 
 	Vector2<Type>& Normalize() {
-		(*this) *= (static_cast<Type>(1)/Length());
+		float length = Length();
+		if(length != 0.f) {
+			(*this) *= (static_cast<Type>(1)/length);
+		}
 		return *this;
 	}
 
