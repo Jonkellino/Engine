@@ -24,6 +24,7 @@ public:
 	void					Render();
 	void					EndFrame();
 	void					NotifyMessage(EngineMessage aMessage);
+	const Vector2i			GetWindowSize() const;
 
 private:
 							Engine();
@@ -41,15 +42,18 @@ private:
 	static Engine*			ourInstance; 
 	SDL_Window*				myWindow;
 	SDL_Renderer*			mySDLRenderer;
+	TTF_Font*				myFont;
+	Vector2i				myWindowSize;
 	Renderer				myRenderer;
 	SpriteFactory			mySpriteFactory;
-
-	TTF_Font*				myFont;
-
+	
 	bool					myLoadMutex;
-
 	DoubleThreadingStack
 		<EngineMessage>		myMessageStack;
+
+
+	std::vector
+		<std::string>		myErrorMessages;
 };
 
 

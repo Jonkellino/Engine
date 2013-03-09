@@ -48,6 +48,10 @@ void Engine::NotifyMessage(EngineMessage aMessage) {
 	myMessageStack.Push(aMessage);
 }
 
+const Vector2i Engine::GetWindowSize() const {
+	return myWindowSize;
+}
+
 void Engine::RenderSprite(const RenderMessage aMessage) {
 	myRenderer.RenderSprite(aMessage);
 }
@@ -58,6 +62,7 @@ RenderMessage Engine::LoadSprite(const std::string& aSprite) {
 	}
 	myLoadMutex = true;
 	RenderMessage output = mySpriteFactory.LoadSprite(aSprite);
+	if(output.textureIndex == 0)
 	myLoadMutex = false;
 	return output;
 }
@@ -94,8 +99,9 @@ void Engine::Init() {
 	IMG_Init(IMG_INIT_PNG);
 	TTF_Init();
 
-	myFont = TTF_OpenFont("font.ttf", 20);
+	myFont = TTF_OpenFont("data/fonts/consolas.ttf", 20);
 	myWindow = SDL_CreateWindow("I am a hat, AMA", 0,0,1680,1024, SDL_WINDOW_BORDERLESS);
+	SDL_GetWindowSize(myWindow, &myWindowSize.x, &myWindowSize.y);
 	mySDLRenderer = SDL_CreateRenderer(myWindow, -1, ::SDL_RendererFlags::SDL_RENDERER_ACCELERATED);
 	myRenderer.Init(myWindow, mySDLRenderer, &mySpriteFactory);
 	mySpriteFactory.Init(mySDLRenderer);

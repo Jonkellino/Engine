@@ -16,6 +16,8 @@ void Renderer::Init(SDL_Window* aWindow, SDL_Renderer* aRenderer, SpriteFactory*
 	myWindow = aWindow;
 	myRenderer = aRenderer;
 	mySpriteFactory = aSpriteFactory;
+
+	SDL_GetWindowSize(aWindow, &myWindowSize.x, &myWindowSize.y);
 }
 
 const bool renderMessageSortCompare(const RenderMessage& first, const RenderMessage& second) 
@@ -37,10 +39,14 @@ void Renderer::Render() {
 		SDL_Point hotspot = {static_cast<int>(message.hotspot.x*fullScale.x),
 							static_cast<int>(message.hotspot.y*fullScale.y)};
 		Vector2i destTopLeft(message.pos.x - hotspot.x, message.pos.y - hotspot.y);
-		SDL_Rect dstRect = {destTopLeft.x, destTopLeft.y, fullScale.x, fullScale.y}; 
+		SDL_Rect dstRect = {destTopLeft.x, destTopLeft.y, fullScale.x, fullScale.y};
+
+		if(dstRect.x + dstRect.w < 0 || dstRect.y + dstRect.h < 0 || dstRect.x > myWindowSize.x || dstRect.y > myWindowSize.y) {
+			continue;
+		}
+
 
 		const SpriteRenderingData data = mySpriteFactory->Get(message.textureIndex); 
-		
 		SDL_SetTextureColorMod(data.myTexture, message.color.r, message.color.g, message.color.b);
 		SDL_SetTextureAlphaMod(data.myTexture, message.color.a);
 		SDL_SetTextureBlendMode(data.myTexture, message.blendMode);

@@ -28,6 +28,7 @@ private:
 		RenderMessage>		myRenderStacks;
 
 	SpriteFactory*			mySpriteFactory;
+	Vector2i				myWindowSize;
 	bool					myActiveRender;
 };
 
