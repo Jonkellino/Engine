@@ -33,6 +33,10 @@ void Engine::Render() {
 			SDL_SetRenderDrawColor(mySDLRenderer, message.lineRender.myColor.r, message.lineRender.myColor.g, message.lineRender.myColor.b, message.lineRender.myColor.a);
 			SDL_RenderDrawLine(mySDLRenderer, message.lineRender.myVertices[0], message.lineRender.myVertices[1], message.lineRender.myVertices[2], message.lineRender.myVertices[3]);
 		}
+		else if(message.myType == EngineMessageType::LINE_ARRAY_RENDER) {
+			SDL_SetRenderDrawColor(mySDLRenderer, message.lineArrayRender.myColor.r, message.lineArrayRender.myColor.g, message.lineArrayRender.myColor.b, message.lineArrayRender.myColor.a);
+			SDL_RenderDrawLines(mySDLRenderer, message.lineArrayRender.myVertices, message.lineArrayRender.verticeCount);
+		}
 	}
 	
 	SDL_RenderPresent(mySDLRenderer);

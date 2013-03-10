@@ -51,10 +51,11 @@ private:
 	DoubleThreadingStack
 		<EngineMessage>		myMessageStack;
 
-
 	std::vector
 		<std::string>		myErrorMessages;
 };
+
+#define EngineInstance Engine::GetInstance()
 
 
 #endif

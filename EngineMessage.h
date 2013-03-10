@@ -2,11 +2,13 @@
 #define _ENGINE_MESSAGE_H_
 
 #include "Color.h"
+#include "SDL\SDL.h"
 
 enum class EngineMessageType
 {
 	WINDOW_SIZE_CHANGE,
-	LINE_RENDER
+	LINE_RENDER,
+	LINE_ARRAY_RENDER
 };
 
 struct EngineMessage
@@ -15,16 +17,18 @@ struct EngineMessage
 
 	union 
 	{
-		struct WindowSizeChange 
-		{
-			int myWindowSize[2];
-		} windowSizeChange;
-
 		struct LineRender
 		{
 			int myVertices[4];
 			Color myColor;
 		} lineRender;
+
+		struct LineArrayRender
+		{
+			int verticeCount;
+			SDL_Point* myVertices;
+			Color myColor;
+		} lineArrayRender;
 	};
 };
 
