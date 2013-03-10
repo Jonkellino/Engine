@@ -42,7 +42,7 @@ void Keyboard::Update()
 	SDL_memcpy(myCurrentState, currentState, sizeof(uint8_t)*myNumberOfKeys);
 }
 
-#pragma warning(push)
+#pragma warning(disable : 4805)
 
 const bool Keyboard::KeyReleased(const SDL_Scancode aKey) const
 {
@@ -64,4 +64,4 @@ const bool Keyboard::KeyUp(const SDL_Scancode aKey) const
 	return myCurrentState[aKey] == false;
 }
 
-#pragma warning( pop )
+#pragma warning( default : 4805 )
