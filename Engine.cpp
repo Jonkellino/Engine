@@ -62,7 +62,6 @@ RenderMessage Engine::LoadSprite(const std::string& aSprite) {
 	}
 	myLoadMutex = true;
 	RenderMessage output = mySpriteFactory.LoadSprite(aSprite);
-	if(output.textureIndex == 0)
 	myLoadMutex = false;
 	return output;
 }
