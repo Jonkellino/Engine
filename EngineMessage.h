@@ -16,13 +16,7 @@ struct EngineMessage
 	EngineMessageType myType;
 
 	union 
-	{
-		struct LineRender
-		{
-			int myVertices[4];
-			Color myColor;
-		} lineRender;
-
+	{ 
 		struct LineArrayRender
 		{
 			int verticeCount;
