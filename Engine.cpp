@@ -27,14 +27,13 @@ void Engine::Render() {
 
 	SDL_UpdateWindowSurface(myWindow); 
 	myRenderer.Render();
-	for(auto index = 0U; index < myMessageStack.Size(); ++index) {
-		EngineMessage& message = myMessageStack[index];
+	while(myMessageStack.Size() > 0) {
+		auto message = myMessageStack.Pop();
 		if(message.myType == EngineMessageType::LINE_ARRAY_RENDER) {
 			SDL_SetRenderDrawColor(mySDLRenderer, message.lineArrayRender.myColor.r, message.lineArrayRender.myColor.g, message.lineArrayRender.myColor.b, message.lineArrayRender.myColor.a);
 			SDL_RenderDrawLines(mySDLRenderer, message.lineArrayRender.myVertices, message.lineArrayRender.verticeCount);
 		}
 	}
-	
 	SDL_RenderPresent(mySDLRenderer);
 	myLoadMutex = false;
 }
@@ -73,7 +72,7 @@ RenderMessage Engine::LoadText(const std::string& aText, const std::string& aTex
 	myLoadMutex = true;
 	SDL_Color col;
 	memset(&col, 255, sizeof(col));
-	
+
 	SDL_Surface* temp = TTF_RenderText_Blended(myFont, aText.c_str(), col);
 	RenderMessage output = mySpriteFactory.LoadSprite(aTextureID, temp); 
 	myLoadMutex = false;

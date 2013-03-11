@@ -39,7 +39,7 @@ public:
 	}
 
 	inline unsigned int Size() const{
-		return myData.Count();
+		return size();
 	}
 	void FloydAlgorithm(){
 		int nonLeafLevel = ( static_cast<int>(myData.size()) - 1 ) / 2;
