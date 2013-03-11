@@ -99,9 +99,12 @@ void Engine::Init() {
 
 	myFont = TTF_OpenFont("data/fonts/consolas.ttf", 20);
 	myWindow = SDL_CreateWindow("I am a hat, AMA", 0,0,1680,1024, SDL_WINDOW_BORDERLESS);
-	SDL_GetWindowSize(myWindow, &myWindowSize.x, &myWindowSize.y);
+	
 	mySDLRenderer = SDL_CreateRenderer(myWindow, -1, ::SDL_RendererFlags::SDL_RENDERER_ACCELERATED);
+	SDL_RenderSetLogicalSize(mySDLRenderer, 1280, 768);
+
 	myRenderer.Init(myWindow, mySDLRenderer, &mySpriteFactory);
 	mySpriteFactory.Init(mySDLRenderer);
+	SDL_RenderGetLogicalSize(mySDLRenderer, &myWindowSize.x, &myWindowSize.y);
 	myLoadMutex = false;
 }
